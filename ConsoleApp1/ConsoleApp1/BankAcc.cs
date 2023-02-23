@@ -55,5 +55,17 @@ namespace BankAccount
             }
             return this.Balance;
         }
+        public decimal PaymentForCredit(decimal payment)
+        {
+            if (payment <= 0)
+            {
+                throw new InvalidOperationException("Payment cannot be zero or negative!");
+            }
+            if (this.Balance < payment)
+            {
+                throw new InvalidOperationException("Not enough money!");
+            }
+            return this.Balance -= payment;
+        }
     }
 }

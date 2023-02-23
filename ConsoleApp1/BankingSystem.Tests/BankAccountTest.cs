@@ -72,6 +72,46 @@ namespace BankingSystem.Tests
             bankAccount.Balance = bankAccount.Bonus();
             Assert.AreEqual(bankAccount.Bonus(), bankAccount.Balance);
         }
+        [Test]
+        public void NegativePaymentShouldThrowInvalidOperationExceptionWithMessage()
+        {
+            {
+                BankAcc bankAccount = new BankAcc(123);
+                decimal payment = -100;
 
+                var ex = Assert.Throws<InvalidOperationException>(() => bankAccount.PaymentForCredit(payment));
+                Assert.AreEqual(ex.Message, "Payment cannot be zero or negative!");
+            }
+        }
+        [Test]
+        public void ZeroPaymentShouldThrowInvalidOperationExceptionWithMessage()
+        {
+            {
+                BankAcc bankAccount = new BankAcc(123);
+                decimal payment = 0;
+
+                var ex = Assert.Throws<InvalidOperationException>(() => bankAccount.PaymentForCredit(payment)); //test dali hwurlq suobshtenie i dali e wqrno ako payment e negative ili 0
+                Assert.AreEqual(ex.Message, "Payment cannot be zero or negative!");
+            }
+        }
+        [Test]
+        public void NotEnoughPaymentShouldThrowInvalidOperationExceptionWithMessage() //test dali hwurlq suobshtenie i dali e wqrno ako payment e po malko ot balance
+        {
+            {
+                BankAcc bankAccount = new BankAcc(123);
+                decimal payment = 100;
+
+                var ex = Assert.Throws<InvalidOperationException>(() => bankAccount.PaymentForCredit(payment));
+                Assert.AreEqual(ex.Message, "Not enough money!");
+            }
+        }
+        [Test]
+        public void BalanceMinusPaymentIfEnoughMoney() //test dali se namalqwa balanca ako paymenta e dostatuchen
+        {
+            BankAcc bankAccount = new BankAcc(123, 1000);
+
+            bankAccount.Balance = bankAccount.PaymentForCredit(100);
+            Assert.AreEqual(bankAccount.PaymentForCredit(100), bankAccount.Balance);
+        }
     }
 }
