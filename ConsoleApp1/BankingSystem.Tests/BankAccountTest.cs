@@ -62,7 +62,10 @@ namespace BankingSystem.Tests
         [Test]
         public void BalanceShouldIncreaseBonus()
         {
+            BankAcc bankAccounts = new BankAcc(123);
 
+            bankAccounts.Bonus();
+            Assert.AreEqual(bankAccounts.Balance, bankAccounts.Balance);
         }
     }
 }

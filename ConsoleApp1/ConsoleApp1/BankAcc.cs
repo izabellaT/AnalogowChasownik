@@ -29,8 +29,8 @@ namespace BankAccount
         }
         public void Increase(double percent)
         {
-
-            this.Balance = this.Balance + this.Balance * percent / 100; 
+            decimal percenT = Convert.ToDecimal(percent);
+            this.Balance = this.Balance + this.Balance * percenT / 100; 
         }
         public void Bonus()
         {
