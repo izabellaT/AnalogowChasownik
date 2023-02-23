@@ -25,14 +25,21 @@ namespace BankAccount
         }
         public void Credit(decimal cash)
         {
+            if (cash <= 0 || cash > Balance)
+            {
+                throw new InvalidOperationException("Negative balance");
+            }
             this.Balance = this.Balance - cash;
         }
         public void Increase(double percent)
         {
-            decimal percenT = Convert.ToDecimal(percent);
-            this.Balance = this.Balance + this.Balance * percenT / 100; 
+            if (percent <= 0)
+            {
+                throw new InvalidOperationException("The percent must be positive!");
+            }
+            this.Balance = this.Balance + this.Balance * (decimal)percent / 100;
         }
-        public void Bonus()
+        public decimal Bonus()
         {
             if (Balance > 1000 && Balance < 2000)
             {
@@ -46,6 +53,7 @@ namespace BankAccount
             {
                 this.Balance = this.Balance + 300;
             }
+            return this.Balance;
         }
     }
 }
